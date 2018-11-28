@@ -31,3 +31,90 @@ down into simpler subproblems. What if there were only one tree? How would
 that simplify the problem, and how can you use the one-tree solution to help
 solve the more general case?
 */
+
+//-------------------LOCAL LIBRARY---------------------
+
+//***KAREL MUST START FACING RIGHT***
+
+import "turns";
+
+function toWall(){
+	while(frontIsClear()){
+		move();
+	}
+}
+
+function up() {
+	turnLeft();
+	move();
+	turnRight();
+}
+
+function right() {
+	move();
+}
+
+function left() {
+	turnAround();
+	move();
+	turnAround();
+}
+
+function down() {
+	turnRight();
+	move();
+	turnLeft();
+}
+
+//-----------------------Actual Program-----------------------------
+
+function SaveForest(){
+	move();
+	climb();
+}
+
+function climb(){
+	while(frontIsBlocked()){
+		turnLeft();
+		move();
+		while(rightIsBlocked()){
+		move();
+			if(frontIsBlocked()){
+				turnAround();
+				toWall();
+				turnRight();
+			}
+		}
+	}
+	if(rightIsClear()){
+		if(leftIsClear()){
+			addLeaves();
+		}
+	}
+}
+
+function addLeaves(){
+		putBeeper();
+		move();
+		putBeeper();
+		turnRight();
+		move();
+		putBeeper();
+		turnRight();
+		move();
+		putBeeper();
+		toWall();
+		turnLeft();
+		nextTree();
+}
+
+function nextTree(){
+	if(frontIsClear()){
+	toWall();
+	climb();
+	} else {climb();}
+}
+
+
+
+
